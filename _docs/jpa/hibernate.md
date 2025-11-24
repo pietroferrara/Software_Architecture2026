@@ -1,7 +1,7 @@
 ---
 title: 1. JPA (Hibernate)
 category: 08. JPA (Hibernate)
-exclude: true
+exclude: false
 order: 1
 ---
 ![Hibernate logo]({{ site.baseurl }}/images/hibernate_logo.png)
