@@ -1,7 +1,7 @@
 ---
 title: 1. NodeJS
 category: 11. Node JS and React
-exclude: true
+exclude: false
 order: 1
 ---
 ![NodeJS logo]({{ site.baseurl }}/images/nodejs_logo.svg)

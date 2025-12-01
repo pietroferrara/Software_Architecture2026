@@ -1,7 +1,7 @@
 ---
 title: 2. Getting Started
 category: 10. Kubernetes
-exclude: true
+exclude: false
 order: 2
 ---
 

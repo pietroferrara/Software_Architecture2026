@@ -1,7 +1,7 @@
 ---
 title: 1. Introduction
 category: 10. Kubernetes
-exclude: true
+exclude: false
 order: 1
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 3. Java examples
 category: 09. RabbitMQ
-exclude: true
+exclude: false
 order: 3
 ---
 <h2>Contents</h2>
