@@ -2,6 +2,8 @@
 title: 2. HTTP REST
 category: 05. HTTP
 order: 2
+exclude: true
+excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc

@@ -1,8 +1,9 @@
 ---
 title: 3. Java examples
 category: 09. RabbitMQ
-exclude: false
 order: 3
+exclude: true
+excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc

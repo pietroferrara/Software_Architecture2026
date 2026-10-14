@@ -1,8 +1,9 @@
 ---
 title: 2. React
 category: 11. Node JS and React
-exclude: false
 order: 2
+exclude: true
+excluded_in_search: true
 ---
 ![NodeJS logo]({{ site.baseurl }}/images/react_logo.svg)
 <h2>Contents</h2>

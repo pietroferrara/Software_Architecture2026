@@ -2,6 +2,8 @@
 title: 3. Testing Java Applications
 category: 02. Gradle
 order: 3
+exclude: true
+excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc

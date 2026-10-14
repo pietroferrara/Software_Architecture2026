@@ -2,6 +2,8 @@
 title: 1. Introduction
 category: 03. Java Spring (Part I)
 order: 1
+exclude: true
+excluded_in_search: true
 ---
 ![Spring logo]({{ site.baseurl }}/images/spring_logo.png)
 <h2>Contents</h2>

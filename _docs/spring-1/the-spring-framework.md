@@ -2,6 +2,8 @@
 title: 2. The Spring Framework
 category: 03. Java Spring (Part I)
 order: 2
+exclude: true
+excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc

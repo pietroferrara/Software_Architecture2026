@@ -1,8 +1,9 @@
 ---
 title: 1. Introduction
 category: 10. Kubernetes
-exclude: false
 order: 1
+exclude: true
+excluded_in_search: true
 ---
 
 ![Kubernetes logo]({{ site.baseurl }}/images/kubernetes_logo.jpg)

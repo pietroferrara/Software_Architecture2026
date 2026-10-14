@@ -1,8 +1,9 @@
 ---
 title: 1. Introduction
 category: 06. Camel
-exclude: false
 order: 1
+exclude: true
+excluded_in_search: true
 ---
 ![Camel logo]({{ site.baseurl }}/images/camel_logo.png)
 <h2>Contents</h2>

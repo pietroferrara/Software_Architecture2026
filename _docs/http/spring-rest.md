@@ -2,6 +2,8 @@
 title: 3. Spring REST
 category: 05. HTTP
 order: 3
+exclude: true
+excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc

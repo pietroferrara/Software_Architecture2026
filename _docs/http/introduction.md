@@ -2,6 +2,8 @@
 title: 1. Introduction
 category: 05. HTTP
 order: 1
+exclude: true
+excluded_in_search: true
 ---
 ![HTTP logo]({{ site.baseurl }}/images/http_logo.png)
 <h2>Contents</h2>

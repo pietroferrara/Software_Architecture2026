@@ -2,7 +2,8 @@
 title: 1. Introduction
 category: 12. AWS Lambda
 order: 1
-exclude: false
+exclude: true
+excluded_in_search: true
 ---
 ![AWS Lambda logo]({{ site.baseurl }}/images/awslambda_logo.png)
 <h2>Contents</h2>

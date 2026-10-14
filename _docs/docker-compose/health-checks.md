@@ -2,7 +2,8 @@
 title: 2. Health Checks
 category: 07. Docker Compose
 order: 2
-exclude: false
+exclude: true
+excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc

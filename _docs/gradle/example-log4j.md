@@ -2,6 +2,8 @@
 title: 4. Example - log4j
 category: 02. Gradle
 order: 4
+exclude: true
+excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc

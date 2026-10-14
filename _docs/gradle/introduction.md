@@ -2,6 +2,8 @@
 title: 1. Introduction 
 category: 02. Gradle
 order: 1
+exclude: true
+excluded_in_search: true
 ---
 ![Gradle logo]({{ site.baseurl }}/images/gradle_logo.png)
 <h2>Contents</h2>

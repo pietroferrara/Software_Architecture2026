@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="Helvetica, Arial, sans-serif">
+  <rect width="640" height="400" fill="#ffffff"/>
+  <!-- container (read-write) layer -->
+  <rect x="40" y="20" width="400" height="60" fill="#e8f6fd" stroke="#1d91c0" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="60" y="56" font-size="18" fill="#0b3954">writable layer</text>
+  <text x="420" y="56" font-size="20" text-anchor="end" font-style="italic" fill="#0b3954">Container</text>
+  <!-- image layers (read-only) -->
+  <rect x="40" y="90" width="400" height="60" fill="#5bc0eb" stroke="#1d91c0" stroke-width="2"/>
+  <text x="60" y="126" font-size="18" fill="#0b3954">add Apache</text>
+  <text x="420" y="126" font-size="20" text-anchor="end" font-style="italic" fill="#0b3954">Image</text>
+  <rect x="40" y="160" width="400" height="60" fill="#3aa7d9" stroke="#1d91c0" stroke-width="2"/>
+  <text x="60" y="196" font-size="18" fill="#ffffff">add emacs</text>
+  <text x="420" y="196" font-size="20" text-anchor="end" font-style="italic" fill="#ffffff">Image</text>
+  <rect x="40" y="230" width="400" height="60" fill="#1d91c0" stroke="#1d91c0" stroke-width="2"/>
+  <text x="60" y="266" font-size="18" fill="#ffffff">Debian</text>
+  <text x="420" y="266" font-size="20" text-anchor="end" font-style="italic" fill="#ffffff">Base Image</text>
+  <!-- host -->
+  <rect x="20" y="320" width="440" height="60" fill="#d9e4e8" stroke="#6b8a96" stroke-width="2"/>
+  <text x="240" y="356" font-size="20" text-anchor="middle" font-style="italic" fill="#2e4650">Host OS kernel (shared)</text>
+  <!-- right-side labels -->
+  <path d="M460 20 h10 v60 h-10" fill="none" stroke="#0b3954" stroke-width="2"/>
+  <text x="480" y="46" font-size="16" fill="#0b3954">read-write</text>
+  <text x="480" y="66" font-size="16" fill="#0b3954">(one per container)</text>
+  <path d="M460 90 h10 v200 h-10" fill="none" stroke="#0b3954" stroke-width="2"/>
+  <text x="480" y="182" font-size="16" fill="#0b3954">read-only</text>
+  <text x="480" y="202" font-size="16" fill="#0b3954">(the image)</text>
+  <text x="480" y="346" font-size="16" fill="#2e4650">not part of</text>
+  <text x="480" y="366" font-size="16" fill="#2e4650">the image</text>
+</svg>
