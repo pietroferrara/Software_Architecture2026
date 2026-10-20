@@ -225,8 +225,8 @@ RPC and REST could seem very similar (for example, considering GitHub, one could
 1. Try a PATCH operation on your previously created issue, for example adding a description (body field) or editing the title. Try also to add a comment to the issue. Now, remove the comment.
 1. Write a script with your preferred language that, taking in input the owner and the name of a public repository, downloads the .zip of the latest tag.
 <div>
-Previous: <a href="/SoftwareArchitectures_2025/http/introduction">HTTP - Introduction</a> 
+Previous: <a href="{{ site.baseurl }}/http/introduction">HTTP - Introduction</a> 
 </div>
 <div>
-Next: <a href="/SoftwareArchitectures_2025/http/spring-rest">HTTP - Spring REST</a>  
+Next: <a href="{{ site.baseurl }}/http/spring-rest">HTTP - Spring REST</a>  
 </div>

@@ -53,8 +53,8 @@ Messages can be <a target="_blank" rel="noopener noreferrer" href="https://www.r
 ACK is a mechanism to ensure that a message is successfully sent. Acknowledgment can be positive (ACK) or negative (NACK). Positive acknowledgments tell the RabbitMQ instance to consider the message as delivered, while a negative acknowledgment says that the message had some problems during consuming and requires specific action (for example, it can be requested or sent to a <a target="_blank" rel="noopener noreferrer" href="https://www.rabbitmq.com/dlx.html">Dead Letter Exchange</a>).
 
 <div>
-Previous: <a href="/SoftwareArchitectures_2025/rabbitmq/introduction">RabbitMQ - Introduction</a> 
+Previous: <a href="{{ site.baseurl }}/rabbitmq/introduction">RabbitMQ - Introduction</a> 
 </div>
 <div>
-Next: <a href="/SoftwareArchitectures_2025/rabbitmq/java-examples">RabbitMQ - Java Examples</a> 
+Next: <a href="{{ site.baseurl }}/rabbitmq/java-examples">RabbitMQ - Java Examples</a> 
 </div>

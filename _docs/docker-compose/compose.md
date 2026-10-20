@@ -107,5 +107,5 @@ And test (for example, adding a database and a table):
 ![HTTP intro]({{ site.baseurl }}/images/dcjpa_compose_5.png)
 Everything works! In the next section, we will see how to use Hibernate to connect our web application to the database.
 <div>
-Next: <a href="/SoftwareArchitectures_2025/docker-compose/health-checks">Health Checks</a> 
+Next: <a href="{{ site.baseurl }}/docker-compose/health-checks">Health Checks</a> 
 </div>

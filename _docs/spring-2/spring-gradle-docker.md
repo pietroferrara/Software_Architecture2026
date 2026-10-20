@@ -45,6 +45,6 @@ docker run -p 8081:8080 unive/spring/student
 ![Spring docker]({{ site.baseurl }}/images/spring_docker_1.png)
 <div class="lesson-nav">
     <div>
-    Previous: <a href="/SoftwareArchitectures_2025/spring-2/application-example">Java Spring - Example of a Spring Application</a>
+    Previous: <a href="{{ site.baseurl }}/spring-2/application-example">Java Spring - Example of a Spring Application</a>
     </div>
 </div>

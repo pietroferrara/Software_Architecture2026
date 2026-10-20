@@ -141,6 +141,6 @@ This command calls the task bootRun, coming from the Spring Gradle plugin, that 
 ![Spring intro]({{ site.baseurl }}/images/spring_intro_4.png)
 <div class="lesson-nav">
     <div>
-        Next: <a href="/SoftwareArchitectures_2025/spring-1/the-spring-framework">Java Spring - The Spring framework</a>  
+        Next: <a href="{{ site.baseurl }}/spring-1/the-spring-framework">Java Spring - The Spring framework</a>  
     </div>
 </div>

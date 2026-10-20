@@ -308,9 +308,9 @@ Hello students
 Hint: by default, docker build shows the output of the RUN commands only briefly, and a cached step is not executed again. To see the output, build the image with ```docker build --progress=plain --no-cache -t <name> .```  
 <div class="lesson-nav">
   <div>
-  Previous: <a href="/SoftwareArchitectures_2025/docker/getting-started">Docker - Getting Started</a>
+  Previous: <a href="{{ site.baseurl }}/docker/getting-started">Docker - Getting Started</a>
   </div>
   <div>
-  Next: <a href="/SoftwareArchitectures_2025/docker/volumes">Docker - Volumes</a>  
+  Next: <a href="{{ site.baseurl }}/docker/volumes">Docker - Volumes</a>  
   </div>
 </div>

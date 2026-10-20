@@ -70,5 +70,5 @@ An HTTP request has an associated method, that semantically indicates the purpos
 ### Body
 The Body part of an HTTP packet is sent just right after the header part. Here, we insert the content (a.k.a message) of the request. In this field, we have also the response from the server. The type of the content inside the body should be defined in a special HTTP Header, Content-Type. The length of the message can be passed to the user agent in the Content-Length header.  
 <div>
-Next: <a href="/SoftwareArchitectures_2025/http/rest">HTTP - REST</a> 
+Next: <a href="{{ site.baseurl }}/http/rest">HTTP - REST</a> 
 </div>

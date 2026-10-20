@@ -55,5 +55,5 @@ Other information about queues can be found <a target="_blank" rel="noopener nor
 
 In the next section, we will start a "dockerized" instance of RabbitMQ to see how it works.
 <div>
-Next: <a href="/SoftwareArchitectures_2025/rabbitmq/quick-start">RabbitMQ - Quickstart</a> 
+Next: <a href="{{ site.baseurl }}/rabbitmq/quick-start">RabbitMQ - Quickstart</a> 
 </div>

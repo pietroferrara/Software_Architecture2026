@@ -42,6 +42,6 @@ Then, we will find the Base Image: this represents the starting point of our lay
 The next layer is the parent image of our image: simply it adds emacs (a CLI text editor) to our base image, Debian. Our image is built on top of Debian + emacs and provides an Apache HTTP server. The last layer is the read-write layer of the container, and inside of it lives the actual app.  
 <div class="lesson-nav">
     <div>
-    Next: <a href="/SoftwareArchitectures_2025/docker/getting-started">Docker - Getting Started</a>
+    Next: <a href="{{ site.baseurl }}/docker/getting-started">Docker - Getting Started</a>
     </div>
 </div>

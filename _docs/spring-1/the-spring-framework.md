@@ -73,6 +73,6 @@ You can also define arguments from the command line:
 {% endhighlight %}
 <div class="lesson-nav">
     <div>
-        Previous: <a href="/SoftwareArchitectures_2025/spring-1/introduction">Java Spring - Introduction</a>
+        Previous: <a href="{{ site.baseurl }}/spring-1/introduction">Java Spring - Introduction</a>
     </div>
 </div>

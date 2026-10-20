@@ -228,6 +228,6 @@ You can also have a look at <a href="https://reactrouter.com/">ReactJS Router</a
 
 <div class="lesson-nav">
     <div>
-    Previous: <a href="/SoftwareArchitectures_2025/node-js-react/node-js">NodeJS</a>  
+    Previous: <a href="{{ site.baseurl }}/node-js-react/node-js">NodeJS</a>  
     </div>
 </div>

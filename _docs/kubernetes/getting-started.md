@@ -169,5 +169,5 @@ minikube service mongo-express-service
 Insert **username=admin** and **password=pass**:
 ![Kubernetes tuto2]({{ site.baseurl }}/images/kubernetes_tuto_2.png){: width="100%" }
 <div>
-Previous: <a href="/SoftwareArchitectures_2025/kubernetes/introduction">Kubernetes - Introduction</a>
+Previous: <a href="{{ site.baseurl }}/kubernetes/introduction">Kubernetes - Introduction</a>
 </div>

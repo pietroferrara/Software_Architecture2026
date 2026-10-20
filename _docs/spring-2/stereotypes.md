@@ -117,6 +117,6 @@ It plays a key role in the Service Layer pattern, handling the logic behind user
 The @Repository annotation is a specialization of @Component and is used to designate a class as a Data Access Object (DAO). This class interacts with the database, managing persistence operations like creating, reading, updating, and deleting records. In other words, a class annotated with @Repository encapsulates the logic needed to interact with the database or other data storage mechanisms.
 <div class="lesson-nav">
 <div>
-Next: <a href="/SoftwareArchitectures_2025/spring-2/application-example">Java Spring - Example of a Spring Application</a>  
+Next: <a href="{{ site.baseurl }}/spring-2/application-example">Java Spring - Example of a Spring Application</a>  
 </div>
 </div>

@@ -156,9 +156,9 @@ OK, this is wonderful. But we want to make our application more user-friendly, f
 1. Implement the capability to search and delete users.  
 <div class="lesson-nav">
     <div>
-    Previous: <a href="/SoftwareArchitectures_2025/spring-2/stereotypes">Spring Sterotypes</a> 
+    Previous: <a href="{{ site.baseurl }}/spring-2/stereotypes">Spring Sterotypes</a> 
     </div>
     <div>
-    Next: <a href="/SoftwareArchitectures_2025/spring-2/spring-gradle-docker">Java Spring - Spring + Gradle + Docker</a>  
+    Next: <a href="{{ site.baseurl }}/spring-2/spring-gradle-docker">Java Spring - Spring + Gradle + Docker</a>  
     </div>
 </div>

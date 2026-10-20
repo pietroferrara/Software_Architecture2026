@@ -148,6 +148,6 @@ app.listen(port, hostname, () => {
 {% endhighlight %}
 <div class="lesson-nav">
     <div>
-    Next: <a href="/SoftwareArchitectures_2025/node-js-react/react">React</a>  
+    Next: <a href="{{ site.baseurl }}/node-js-react/react">React</a>  
     </div>
 </div>

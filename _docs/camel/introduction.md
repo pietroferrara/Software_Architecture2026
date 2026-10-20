@@ -70,5 +70,5 @@ At the end, we have a to, which is the last endpoint in which messages flow.
 Our example simply moves all the files of the /input directory into the /output dir, logging the name.  
 If you look at the static main method, probably you will notice something strange: we create a main Camel object passing our class as a costructor parameter, and then we call the run method. We did this because a Camel pipeline works in a separate thread. Using the Camel Main permits to keep running the pipeline. Now launch the application, and try to create some files in the /input folder. You should see that the file moves to the /output folder.
 <div>
-Next: <a href="/SoftwareArchitectures_2025/camel/example">Camel - Example</a> 
+Next: <a href="{{ site.baseurl }}/camel/example">Camel - Example</a> 
 </div>

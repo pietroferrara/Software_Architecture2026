@@ -45,5 +45,5 @@ volumes:
 
 The web service depends on the database (students_db). However, without a health check, the web service could start querying the database before it's ready. By adding the health check, Docker ensures that the web application will only attempt to connect after the MySQL database is confirmed to be ready.
 <div>
-Previous: <a href="/SoftwareArchitectures_2025/docker-compose/compose">Docker Compose</a> 
+Previous: <a href="{{ site.baseurl }}/docker-compose/compose">Docker Compose</a> 
 </div>

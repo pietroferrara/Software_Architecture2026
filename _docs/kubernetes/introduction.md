@@ -56,5 +56,5 @@ Node components run on every node in the cluster.
 More details about Cluster components can be found <a target="_blank" rel="noopener noreferrer" href="https://kubernetes.io/docs/concepts/overview/components/">here</a>.
 
 <div>
-Next: <a href="/SoftwareArchitectures_2025/kubernetes/getting-started">Kubernetes - Getting Started</a>
+Next: <a href="{{ site.baseurl }}/kubernetes/getting-started">Kubernetes - Getting Started</a>
 </div>

@@ -75,9 +75,9 @@ If you installed Docker Desktop, you can do the same operations from its interfa
 2. Experiment with environmental variables. Create a new container from the getting-started image with an environment variable (hint: use the ```-e``` flag of docker run, e.g. ```docker run -d -p 8081:80 -e GREETING=ciao docker/getting-started```). Install python also on this container (as we said in the previous lessons, the edits we do in a container remain in the container layer - parent image layers are read-only) and try to print out the environment variable from a python script (see <a target="_blank" rel="noopener noreferrer" href="https://docs.python.org/3/library/os.html">the os python standard module</a>).  
 <div class="lesson-nav">
     <div>
-    Previous: <a href="/SoftwareArchitectures_2025/docker/introduction">Docker - Introduction</a>
+    Previous: <a href="{{ site.baseurl }}/docker/introduction">Docker - Introduction</a>
     </div>
     <div>
-    Next: <a href="/SoftwareArchitectures_2025/docker/cli-and-dockerfile">Docker - CLI and Dockerfile</a>  
+    Next: <a href="{{ site.baseurl }}/docker/cli-and-dockerfile">Docker - CLI and Dockerfile</a>  
     </div>
 </div>

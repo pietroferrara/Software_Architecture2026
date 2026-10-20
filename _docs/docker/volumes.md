@@ -91,6 +91,6 @@ Here, we mount the current folder (the source code of the application) in the /a
 Note that npm install, launched inside the container, creates the node_modules folder in your project folder (because of the bind mount): on Linux, it will be owned by root.
 <div class="lesson-nav">
     <div>
-        Previous: <a href="/SoftwareArchitectures_2025/docker/cli-and-dockerfile">Docker - CLI and Dockerfile</a>
+        Previous: <a href="{{ site.baseurl }}/docker/cli-and-dockerfile">Docker - CLI and Dockerfile</a>
     </div>
 </div>
