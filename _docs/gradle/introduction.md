@@ -12,13 +12,13 @@ excluded_in_search: true
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/JCCOMnGtjrY?si=63LBNhAWYYIS6fsJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ## What is Gradle
 Gradle is an open-source build automation tool, that is, a tool that permits developers to automatize tasks like, for example, test execution, code compiling, deployment, and generation of documentation.
-It is the most popular build system for the Java Virtual Machine (JVM) and the default for Android.
+It is one of the most popular build systems for the Java Virtual Machine (JVM) and the default for Android.
 The peculiarity of Gradle is that it provides its own high-level and declarative build language that permits writing build logic with ease. In this course, we will focus only on the compilation part of Gradle for Java applications.
 
 ## Installation
 You can install gradle in many different ways:
 1. Installing <a target="_blank" rel="noopener noreferrer" href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>: Gradle will be installed by default (**Recommended**).
-2. Installing the <a target="_blank" rel="noopener noreferrer" href="https://code.visualstudio.com/docs/jav<a target="_blank" rel="noopener noreferrer" href="ild">Java Extension Pack</a> for <a target="_blank" rel="noopener noreferrer" href="https://code.visualstudio.com/">Visual Studio Code</a>.
+2. Installing the <a target="_blank" rel="noopener noreferrer" href="https://code.visualstudio.com/docs/java/java-build">Java Extension Pack</a> for <a target="_blank" rel="noopener noreferrer" href="https://code.visualstudio.com/">Visual Studio Code</a>.
 3. <a target="_blank" rel="noopener noreferrer" href="https://gradle.org/install/">Manual installation</a> (just follow the documentation).  
 
 For this course, we will use Gradle with IntelliJ IDEA.
@@ -109,9 +109,9 @@ A keen eye might have noticed that on the root folder of our project, there are 
 ![Gradle intro]({{ site.baseurl }}/images/gradle_intro_4.png)  
 
 ### A Quick Note About DSL
-Maybe you noticed that during the creation of the project you could choose the Gradle DSL (Domain Specific Language). This goes to specifies the language that you want to use for your Gradle build file (more details on this file later). Kotlin is the preferred choice since it is more readable and offers better compile-time checks since Kotlin is statically typed. However, syntax differences are minimal, so you can choose whatever you prefer. 
+Maybe you noticed that during the creation of the project you could choose the Gradle DSL (Domain Specific Language). This specifies the language that you want to use for your Gradle build file (more details on this file later). Kotlin is the preferred choice since it is more readable and offers better compile-time checks since Kotlin is statically typed. However, syntax differences are minimal, so you can choose whatever you prefer. 
 <div class="lesson-nav">
     <div>
-        Next: <a href="/SoftwareArchitectures_2025/gradle/build.gradle">Gradle - build.gradle</a>
+        Next: <a href="{{ site.baseurl }}/gradle/build.gradle">Gradle - build.gradle</a>
     </div>
 </div>
