@@ -2,15 +2,13 @@
 title: 3. Testing Java Applications
 category: 02. Gradle
 order: 3
-exclude: true
-excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc
 {:toc}
 
 ## Testing
-Testing is a program analysis technique that aims to check the correctness of a piece of code just by observing its executions.
+Testing is a program analysis technique that aims to check the correctness of a piece of code by observing its executions.
 Suppose that we have this Java application:  
 
 {% highlight java %}
@@ -32,8 +30,8 @@ public class Main {
     }
 }
 {% endhighlight %}
-We want to check if the function add behaves correctly. The function should return the sum of two integers: if we have, for example, 3 and 4, Main.add should return 7.   
-We can check manually by running the main method. As you can see, the main function takes in input the two numbers to add as arguments. With the "run" task of gradle, one can pass arguments using the flag --args, as the next example shows: 
+We want to check whether the function `add` behaves correctly. It should return the sum of two integers: for example, given 3 and 4, `Main.add` should return 7.   
+We can check it manually by running the `main` method, which takes the two numbers to add as arguments. With Gradle's `run` task, we can pass arguments using the `--args` flag:
 {% highlight bash %}
 ~/IdeaProjects/Gradle-GettingStarted ./gradlew run --args="3 4"
 
@@ -44,7 +42,7 @@ BUILD SUCCESSFUL in 799ms
 2 actionable tasks: 1 executed, 1 up-to-date
 ~/IdeaProjects/Gradle-GettingStarted 
 {% endhighlight %}
-The function seems to behave correctly. But what we can say for all the other integers? We don't know. Let's try some other cases:
+The function seems to behave correctly. But what about all the other integers? We don't know. Let's try some other cases:
 {% highlight bash %}
 ~/IdeaProjects/Gradle-GettingStarted ./gradlew run --args="-3 -10"
 
@@ -76,25 +74,32 @@ BUILD SUCCESSFUL in 717ms
 2 actionable tasks: 1 executed, 1 up-to-date
 ~/IdeaProjects/Gradle-GettingStarted 
 {% endhighlight %}
-What we are doing here is called manual testing: it requires that a person (tester) put themselves in the shoes of an end-user to test the application's features to ensure correct behavior. However, testing an application this way could be time-consuming and costly, and often could lead to human error. Automated Testing comes with our help: it is a testing method that permits the definition of tests in a programmable way. The idea is to write some software to check automatically the execution of our program. The intuition is that instead of manually trying some combinations of numbers and checking that the sum provided by our program is correct, we can define a set of cases that we want to test and then run automatically software that controls that these cases produce the correct results. This lesson aims to show how we can use a Java Framework (<a target="_blank" rel="noopener noreferrer" href="https://junit.org/junit5/">JUnit</a>) that permits us to write and run tests. The benefits of using an automated test arise with more complex examples: suppose that you wrote a function that does something and you are manually testing it. You want to test 100 distinct input values to be sure that your function behaves correctly. So you start testing, and on the 99th test, you find that something is wrong. In that case, you need to fix the code, and you need to redo all the tests! This requires a lot of time, and having an automated testing mechanism permits testing all the inputs at once.
+What we are doing here is called manual testing: a person (the tester) puts themselves in the shoes of an end user and tries the application's features to make sure that they behave correctly. However, testing an application this way is time-consuming, costly, and prone to human error.  
 
-**NOTE**: *this doesn't mean that manual testing is useless, indeed it is required in the early phase of the software development, before automating, to check automation feasibility. In addition, when you download and try a beta version of an application, you are actually performing some sort of manual testing.*
+Automated testing comes to our rescue: instead of checking the program by hand, we write software that checks it for us. Rather than manually trying some combinations of numbers and verifying each sum, we define a set of cases that we want to test, and then let a program automatically verify that each of them produces the correct result. In this lesson, we will see how to do this with <a target="_blank" rel="noopener noreferrer" href="https://junit.org/">JUnit</a>, a Java framework for writing and running tests.  
+
+The benefits of automated testing become clear with more complex examples. Suppose that you wrote a function and you want to test it on 100 different inputs. You start testing by hand and, at the 99th input, you find a bug. You fix the code... and now you need to redo all the tests from the beginning! With automated tests, you can rerun all of them at once, in a few seconds.
+
+**NOTE**: *this doesn't mean that manual testing is useless. It is needed in the early phases of software development, before automating, to check whether automation is feasible. Moreover, when you download and try the beta version of an application, you are actually performing a form of manual testing.*
 ### Unit Testing and Integration Testing
-Before going into details, it is necessary to say something about different testing processes. Here we will focus on Unit Testing, that is, testing the correctness of software components (for example, a function or a class) in isolation. This is the first phase of testing and it is considered white-box testing: these tests are performed by a developer that knows the internal design of the software.  
-If we want to test how two or more software components interact with each other we need to talk about integration testing. Integration tests are performed after unit tests and don't require a knowledge of the internal design of the software (black-box testing). The idea here is to test the correctness of the interface between software units (for example, testing that if you log in to a website you will be redirected to your account page).
-## JUnit
-<a target="_blank" rel="noopener noreferrer" href="https://junit.org/junit5/">JUnit</a> is a unit testing framework for the Java programming language. Let's see how it works.  
+Before going into details, let's say something about the different kinds of testing. Here, we will focus on unit testing, that is, testing the correctness of a software component (for example, a function or a class) in isolation. This is the first phase of testing, and it is considered white-box testing: these tests are written by developers who know the internal design of the software.  
 
-First, we need to add JUnit dependencies in our build.gradle file (use the Gradle-GettingStarted project, and replace the Main class with the one provided in this lesson).
+If we want to test how two or more components interact with each other, we talk about integration testing. Integration tests come after unit tests: rather than the internal logic of each unit, they check the correctness of the interfaces between them (for example, testing that our application correctly saves data to a real database and reads it back). Going further, end-to-end tests check the whole application from the user's point of view, without any knowledge of its internal design (black-box testing): for example, testing that if you log in to a website you are redirected to your account page.
+## JUnit
+<a target="_blank" rel="noopener noreferrer" href="https://junit.org/">JUnit</a> is a unit testing framework for the Java programming language. Let's see how it works.  
+
+First, we need the JUnit dependencies in our build file. We already added them to the Gradle-GettingStarted project, so you can just reuse it (replace the `Main` class with the one shown above):
 {% highlight kotlin %}
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    testImplementation(platform("org.junit:junit-bom:6.1.3"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 {% endhighlight %}
-- testImplementation is a configuration that tells the required dependencies used for compile tests.
-- testRuntimeOnly defines the dependencies required only at test runtime.
-Now, inside src/test/java, create a class called UnitTests and insert these lines:
+- `testImplementation` declares the dependencies needed to compile and run the tests: here, the JUnit BOM (which fixes the version of all the JUnit modules) and `junit-jupiter` (the API that we use to write tests, and the engine that runs them).
+- `testRuntimeOnly` declares the dependencies needed only when running the tests: here, the launcher that Gradle uses to start them.
+
+Now, inside `src/test/java`, create a class called `UnitTests` with this content:
 {% highlight java %}
 import org.example.Main;
 import org.junit.jupiter.api.Test;
@@ -109,18 +114,56 @@ public class UnitTests {
     } 
 }
 {% endhighlight %}
-Before going further, let's spend some words on the method testAdd. The @Test <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Java_annotation">annotation</a> tells that the method is a test method. The body of the method is self-explanatory: simply, it checks that the value returned by the method add is correct, if not, it raises an exception. This simulates what we did "by hand" just some minutes ago. If the test raises an error, it means that there is something wrong with the method.
-You can run tests with gradlew from the terminal.
+Let's spend a few words on the method `testAdd`. The `@Test` <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Java_annotation">annotation</a> marks the method as a test. The body is self-explanatory: it checks that the value returned by `add` is correct and, if not, it throws an exception. This is exactly what we did by hand a few minutes ago. If the test throws an exception, it fails: there is something wrong with the method.  
+
+You can run the tests from the terminal with `gradlew`:
 {% highlight bash %}
 ./gradlew test # launch all the defined test methods
 ./gradlew test --tests 'UnitTests.testAdd' # launch test method testAdd of class UnitTests
 {% endhighlight %}
-If you are using IntelliJ, probably you have noticed that a play button appears on the right of the method signature:
+If you are using IntelliJ, you have probably noticed a play button next to the method signature:
 ![Gradle testing]({{ site.baseurl }}/images/gradle_testing_1.png)
-If you click on it, you can run the test, or among the other things you can run the test with coverage. Choose run with coverage. Now, on the right, a window will appear telling you the coverage (i.e. the percentage of your code that your test reaches: for our case, we cover all the classes, 50% of methods (1 method of 2), and the 20% of code lines). Open the Main class and notice the green shape on the left of the function "add". This means that the "testAdd" function executes the function completely. Of course, we didn't call the "main" method from the test, so the main has no coverage (highlighted in red).
+Clicking on it, you can run the test or, among other options, run it with coverage. Choose "Run with Coverage". A window will appear on the right, showing the coverage, i.e., the percentage of your code that the tests reach. In our case, we cover 100% of the classes, 50% of the methods (1 out of 2), and 20% of the lines. Open the `Main` class and notice the green mark on the left of the function `add`: it means that `testAdd` executes the function completely. Of course, we never call `main` from the test, so `main` has no coverage (highlighted in red).
 ![Gradle testing]({{ site.baseurl }}/images/gradle_testing_2.png)
+### Assertions
+Writing an `if` and throwing an exception by hand for every check works, but it quickly becomes verbose, and when the test fails, the message "Wrong!" doesn't tell us much. JUnit provides a set of <a target="_blank" rel="noopener noreferrer" href="https://docs.junit.org/current/writing-tests/assertions.html">assertions</a>, i.e., static methods of the class `org.junit.jupiter.api.Assertions` that check a condition and make the test fail if the condition does not hold. Let's rewrite our test with them:
+{% highlight java %}
+import org.example.Main;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class UnitTests {
+
+    @Test
+    public void testAdd() {
+        assertEquals(46, Main.add(12, 34));
+        assertEquals(-13, Main.add(-3, -10));
+        assertEquals(0, Main.add(5, -5));
+    }
+
+    @Test
+    public void testAddOverflow() {
+        assertThrows(ArithmeticException.class, () -> Main.add(Integer.MAX_VALUE, 1));
+    }
+}
+{% endhighlight %}
+The most common assertions are:
+1. `assertEquals(expected, actual)`: checks that two values are equal. Note the order of the arguments: first the value that we expect, then the value computed by our code.
+2. `assertTrue(condition)` and `assertFalse(condition)`: check that a boolean condition is true (or false).
+3. `assertNull(value)` and `assertNotNull(value)`: check that a value is (or is not) `null`.
+4. `assertThrows(exceptionClass, code)`: checks that the given code (a lambda) throws an exception of the given class.
+
+The second test, `testAddOverflow`, deserves a few words. An `int` in Java has a maximum value (`Integer.MAX_VALUE`, i.e., 2147483647): what happens if we add 1 to it? With the `+` operator, the result silently "wraps around" and becomes a negative number, which is clearly wrong. Our `add` function uses `Math.addExact`, which instead throws an `ArithmeticException` in case of overflow, and the test checks exactly this behavior. Testing what happens with "wrong" or extreme inputs is as important as testing the normal cases.  
+
+When an assertion fails, the test fails, and JUnit records exactly what went wrong. For example, if we write `assertEquals(47, Main.add(12, 34))`, `./gradlew test` fails and prints which test failed, together with the line of the failing assertion:
+{% highlight bash %}
+UnitTests > testAdd() FAILED
+    org.opentest4j.AssertionFailedError at UnitTests.java:10
+{% endhighlight %}
+The details of the failure (`expected: <47> but was: <46>`) are shown in the IntelliJ test panel, and in the HTML report that Gradle generates at `build/reports/tests/test/index.html` (open it with your browser).
 ## The importance of writing tests that make sense
-Our test passed successfully and covered all the lines of our add function. But are we really, really, really sure that the function is bug-free? Spoiler: no. To tell you why, we need a more complex example. Suppose that we have this function, that checks if two String has the same amount of 0s:
+Our test passed and covered all the lines of our `add` function. But are we really, really, really sure that the function is bug-free? Spoiler: no. To see why, we need a more complex example. Suppose that we have this function, which checks whether two strings contain the same number of 0s (add it to the `Main` class):
 {% highlight java %}
 public static boolean equalZero(String a, String b) {
     int countA = 0;
@@ -139,51 +182,41 @@ public static boolean equalZero(String a, String b) {
     return countA == countB;
 }
 {% endhighlight %}
-And we have this test:
+And this test (add it to the `UnitTests` class):
 {% highlight java %}
 @Test
-public void testEqual0() throws Exception {
-    if (!Main.equalZero("Hell0", "Hell0 World!")) {
-        throw new Exception("Wrong!");
-    }
-    if (!Main.equalZero("0100001111", "10000101111")) {
-        throw new Exception("Wrong!");
-    }
-    if (Main.equalZero("0", "1")) {
-        throw new Exception("Wrong!");
-    }
-    if (!Main.equalZero("", "11")) {
-        throw new Exception("Wrong!");
-    }
-    if (!Main.equalZero("", "")) {
-        throw new Exception("Wrong!");
-    }
+public void testEqual0() {
+    assertTrue(Main.equalZero("Hell0", "Hell0 World!"));
+    assertTrue(Main.equalZero("0100001111", "10000101111"));
+    assertFalse(Main.equalZero("0", "1"));
+    assertTrue(Main.equalZero("", "11"));
+    assertTrue(Main.equalZero("", ""));
 }
 {% endhighlight %}
-Let's try to launch the test:
+Let's run the test:
 {% highlight bash %}
 ~/IdeaProjects/Gradle-GettingStarted ./gradlew test --tests 'UnitTests.testEqual0'
 
-Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
-
-You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
-
-For more on this, please refer to https://docs.gradle.org/8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+> Task :test
 
 BUILD SUCCESSFUL in 1s
 3 actionable tasks: 3 executed
 ~/IdeaProjects/Gradle-GettingStarted 
 {% endhighlight %}
-As you can see, the test passed. We tried empty strings, strings with different lengths, and strings without zeros. We can also convince ourselves that the function is correct. But... Let's add this test case:
+The test passed. We tried empty strings, strings of different lengths, and strings without zeros, so we may be convinced that the function is correct. But... let's add this test case:
 {% highlight java %}
-if (Main.equalZero("0011", "11000")) {
-    throw new Exception("Wrong!");
-}
+assertFalse(Main.equalZero("0011", "11000"));
 {% endhighlight %}
-Launch the test and notice the error. This simple example aims to show that sometimes a bug can hide itself well in the code, and even if we have defined multiple test cases and covered all the lines of a method bugs can remain unnoticed. To have meaningful tests, it is important to reason about all the borderline cases.
+Run the test again and notice the failure. This simple example shows that a bug can hide very well in the code: even with multiple test cases that cover all the lines of a method, bugs can go unnoticed. To write meaningful tests, it is important to reason about all the edge cases.
 
 ## Exercises
-1. Fix the equalZero function. Can you improve the modularity of this function?
+1. Fix the `equalZero` function. Can you also make it more modular?
 2. You have this Java class:
 {% highlight java %}
 package org.acme;
@@ -220,7 +253,7 @@ class QuickSort {
     }
 }
 {% endhighlight %}
-Create a Main class that uses the method "sort", and write a build.gradle file for the project. Write also some tests.  
+Create a `Main` class that uses the method `sort`, and write a build file for the project. Then, write some tests.  
 <div class="lesson-nav">
     <div>
         Previous: <a href="{{ site.baseurl }}/gradle/build.gradle">Gradle - build.gradle</a>

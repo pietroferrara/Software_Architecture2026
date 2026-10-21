@@ -2,17 +2,16 @@
 title: 4. Example - log4j
 category: 02. Gradle
 order: 4
-exclude: true
-excluded_in_search: true
 ---
 <h2>Contents</h2>
 * toc
 {:toc}
 
-Here, we will see an example of how we can add a dependency to our Gradle project. For this purpose, we will present a Java logging library, <a target="_blank" rel="noopener noreferrer" href="https://logging.apache.org/log4j/2.x/">Log4j</a>.
+In this section, we will see how to add a dependency to our Gradle project and use it. As an example, we will use a Java logging library: <a target="_blank" rel="noopener noreferrer" href="https://logging.apache.org/log4j/2.x/">Log4j</a>.
 ## Logging
-When you write software, it is useful to introduce logs. Logs can help, for example, to record the execution of events in your application, to identify and understand the pattern of activities, and to identify the source of problems in case of software incidents.  
-Log4j is a library that enhances the main logging mechanism of Java. To use Log4J in a Java Gradle project, we follow what the <a target="_blank" rel="noopener noreferrer" href="https://logging.apache.org/log4j/2.x/manual/installation.html">documentation</a> says and we add the dependencies. Our build.gradle file should look like this:
+When you write software, it is useful to add logs. Logs help you, for example, to record the events that happen in your application, to understand its patterns of activity, and to find the source of a problem when something goes wrong.  
+
+Log4j is a library that improves on Java's built-in logging mechanism. To use Log4j in a Gradle project, we follow the <a target="_blank" rel="noopener noreferrer" href="https://logging.apache.org/log4j/2.x/manual/installation.html">documentation</a> and add its dependencies. Our build file should look like this:
 {% highlight kotlin %}
 plugins {
     id("application")
@@ -26,10 +25,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.logging.log4j:log4j-api:2.20.0")
-    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    implementation("org.apache.logging.log4j:log4j-api:2.26.1")
+    implementation("org.apache.logging.log4j:log4j-core:2.26.1")
+    testImplementation(platform("org.junit:junit-bom:6.1.3"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 application {
@@ -41,7 +41,7 @@ tasks.test {
 }
 {% endhighlight %}
 
-Then, we can just start using the log4j library directly on our application:
+Then, we can start using Log4j in our application:
 {% highlight java %}
 package org.example;
 
@@ -62,10 +62,10 @@ public class Main {
     }
 }
 {% endhighlight %}
-However, nothing is printed out in the console. This is because we need to configure the log4J library. To do so, create a file in /src/main/resources, named "log4j2.xml", with this content:
+However, if you run the application, nothing is printed in the console. This is because we haven't configured Log4j yet: without a configuration, Log4j uses a default one that prints only the most severe messages (errors), so our info message is discarded. To configure it, create a file named `log4j2.xml` in `src/main/resources` (remember: this is the folder for the files that the application needs at runtime), with this content:
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
@@ -82,16 +82,16 @@ However, nothing is printed out in the console. This is because we need to confi
     </Loggers>
 </Configuration>
 {% endhighlight %}
-<a target="_blank" rel="noopener noreferrer" href="https://logging.apache.org/log4j/2.x/manual/configuration.html">Here</a> you can find additional information. Our configuration file tells log4j to log both in the console and in the file ./logs/log.log. Check it out!  
+This configuration tells Log4j to write the logs both to the console and to the file `./logs/log.log`. Run the application again and check it out! The `status` attribute, instead, refers to the internal messages of Log4j itself: with `WARN`, Log4j tells us only if something is wrong with its configuration. You can find more information about the configuration file <a target="_blank" rel="noopener noreferrer" href="https://logging.apache.org/log4j/2.x/manual/configuration.html">here</a>.  
 
 ## Log level
-You can classify logs based on their importance. You can do this by using the log level. A high log level means that the logged information is more important than a lower one and requires particular attention. Usually, a high level reports fatal errors and errors in general. Here are what log level log4j offers (ordered by importance):
-1. Fatal: tells that the application enters a state in which one of the crucial functionalities stopped working.
-2. Error: tells that one or more functionality doesn't work properly.
-3. Warn: tells that something unexpected happens, but the application is not affected.
-4. Info: tells that something happens (for example, used to track that the application enters a certain state).
-5. Debug: in this level, you should put all the information that regards debugging.
-6. Trace: used when you need full visibility of what it is happening inside your application (for example, you can use trace to keep track of the control flow of your application).
+Logs can be classified by importance, using the log level. The higher the level, the more important the message, and the more attention it requires: the highest levels are used for errors and fatal errors. These are the levels offered by Log4j, from the most to the least important:
+1. Fatal: the application is in a state where one of its crucial functionalities has stopped working.
+2. Error: one or more functionalities don't work properly.
+3. Warn: something unexpected happened, but the application is not affected.
+4. Info: something normal happened (for example, the application entered a certain state).
+5. Debug: information useful for debugging.
+6. Trace: the finest-grained information, used when you need full visibility of what is happening inside your application (for example, to follow its control flow step by step).
 
 You can use log levels in the following way:
 
@@ -135,11 +135,14 @@ BUILD SUCCESSFUL in 1s
 3 actionable tasks: 2 executed, 1 up-to-date
 ~/IdeaProjects/Gradle-GettingStarted 
 {% endhighlight %}
+Notice that the trace message is missing. In our configuration file, the root logger has `level="debug"`: this means that only messages with level debug or higher (i.e., more important) are logged, and the others are discarded. Try to change it to `"trace"` (all the messages are logged) or to `"warn"` (only warn, error, and fatal messages are logged), and run the application again.  
+
+This is very useful in practice: you can fill your code with debug and trace messages during development, and then raise the level in production to keep only the important ones, without touching the code.
 
 ## Exercises
-1. Define a class Student that has a name, a surname,  a matriculation number, and a list of passed Courses. Then, write a test function that creates a Student and adds some courses to its list. Log the created Student in a log entry in JSON format using the <a target="_blank" rel="noopener noreferrer" href="https://github.com/google/gson">gson</a> library and log4j.
+1. Define a class `Student` that has a name, a surname, a matriculation number, and a list of passed courses. Then, write a test that creates a `Student` and adds some courses to their list. Finally, log the created `Student` in JSON format, using Log4j and the <a target="_blank" rel="noopener noreferrer" href="https://github.com/google/gson">Gson</a> library.
 <div class="lesson-nav">
     <div>
-        Previous: <a href="{{ site.baseurl }}/gradle/testing-java-applications">Gradle - Testing Java Application</a>
+        Previous: <a href="{{ site.baseurl }}/gradle/testing-java-applications">Gradle - Testing Java Applications</a>
     </div>
 </div>
