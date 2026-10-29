@@ -2,8 +2,8 @@
 title: 2. The Spring Framework
 category: 03. Java Spring (Part I)
 order: 2
-exclude: true
-excluded_in_search: true
+exclude: false
+excluded_in_search: false
 ---
 <h2>Contents</h2>
 * toc
@@ -11,7 +11,7 @@ excluded_in_search: true
 We saw what Spring is, and we deployed an example of a Spring application in a local server. We will now examine and enhance the example of getting started that we have seen. Note that the Spring Framework is vast, and in these lessons, we want to provide an intuition of how it works from a high-level perspective without going too much into the details. Interested students are encouraged to look at the official documentation. However, all the information provided here should be enough for the scope of the final project.
 
 ## Configuration
-The @SpringBootApplication annotation is used to mark a configuration class. In a configuration class, we insert our static main, which is the entry point of the application that instantiates and runs the Spring Application, with ***StringApplication.run***:
+The @SpringBootApplication annotation is used to mark the main configuration class of the application. It is a shortcut for three annotations: @Configuration (the class can define configuration for the framework), @EnableAutoConfiguration (Spring Boot configures the application automatically, based on the dependencies it finds) and @ComponentScan (Spring looks for components, like our Hello controller, in this package and its sub-packages). In this class, we insert our static main, which is the entry point of the application that instantiates and runs the Spring Application, with ***SpringApplication.run***:
 {% highlight java %}
 @SpringBootApplication
 public class SpringGettingStartedApplication {
@@ -21,7 +21,7 @@ public class SpringGettingStartedApplication {
     }
 }
 {% endhighlight %}
-Try to run the application without the @StringBootApplication. The server will not run. This is because the @StringBootApplication annotation (that comes from the Spring Boot dependency, that has we said before helps us to build a Spring Server application) tells the Spring framework how to be configured, doing the dirty job for us. This is great, but sometimes, some changes to the default configuration are required. For example, you may want to change the default port, and there are different ways to achieve this. Let's see some of them.
+Try to run the application without the @SpringBootApplication. The server will not run. This is because the @SpringBootApplication annotation (that comes from Spring Boot, which, as we said before, helps us to build a Spring Server application) tells the Spring framework how to be configured, doing the dirty job for us. This is great, but sometimes, some changes to the default configuration are required. For example, you may want to change the default port, and there are different ways to achieve this. Let's see some of them.
 ### application.properties
 In **/src/main/resources** folder, there should be a file named **application.properties**. If not, create it.   
 
@@ -31,7 +31,7 @@ server.port=8888
 {% endhighlight %}
 Notice that the port changed by rebooting the application:
 ![Spring framework]({{ site.baseurl }}/images/spring_framework_1.png)
-In <a target="_blank" rel="noopener noreferrer" href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html">this</a> link, some properties are listed.
+In <a target="_blank" rel="noopener noreferrer" href="https://docs.spring.io/spring-boot/appendix/application-properties/index.html">this</a> link, you can find the list of the common application properties.
 ### Programmatic Configuration
 Properties can be added directly in code in this way:
 {% highlight java %}
@@ -44,11 +44,10 @@ public class CustomApplication {
     }
 }
 {% endhighlight %}
-Instead of using the static method SpringApplication.run, we instantiate a StringApplication object and set the desired properties before running the application.
+Instead of using the static method SpringApplication.run, we instantiate a SpringApplication object and set the desired properties before running the application.
 Properties are defined using a Map<String, Object> data structure. If you run the application, probably you will notice that the port does not change. This is because the properties defined in application.properties have priority over what we define in the code. Remove the server.port property from the file and relaunch the app. Now the port should be the one defined in the setDefaultProperties function. As the name suggests, this method sets default values for properties and should be used as a fallback for properties not defined in application.properties.
 Another way to configure the application is by using a special Spring Component. A Spring component can be used for IoC, and it is defined by using the @Component annotation. The framework collects all component classes for our project and performs the required operation in a transparent manner. Let's see an example:
 {% highlight java %}
-@Component
 package com.example.spring.customizers;
 
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
@@ -64,11 +63,11 @@ public class ServerPort implements WebServerFactoryCustomizer<ConfigurableWebSer
     }
 }
 {% endhighlight %}
-Create a file ServerPort.java inside com.example.Spring.customers package and insert the above snippet. The class implements the <a target="_blank" rel="noopener noreferrer" href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/web/server/WebServerFactoryCustomizer.html">WebServerFactoryCustomizer</a> interface, which permits to customize the server creation. Spring then calls this implementation internally (again, note the IoC in action). The core of this little class is defined inside the customize method, in which we set the port.  
-Note that with Component, we are not using properties; we are telling the Factory directly how it should initialize the server. This method overrides the value defined in the port property.
+Create a file ServerPort.java inside the com.example.spring.customizers package and insert the above snippet. The class implements the <a target="_blank" rel="noopener noreferrer" href="https://docs.spring.io/spring-boot/api/java/org/springframework/boot/web/server/WebServerFactoryCustomizer.html">WebServerFactoryCustomizer</a> interface, which permits to customize the server creation. Spring then calls this implementation internally (again, note the IoC in action). The core of this little class is defined inside the customize method, in which we set the port.  
+Note that with Component, we are not using properties; we are telling the Factory directly how it should initialize the server. This method overrides the value defined in the port property, wherever it comes from (application.properties, code, or command line).
 ### Command-Line
-You can also define arguments from the command line:
-{% highlight java %}
+You can also define properties from the command line. Before trying it, delete (or comment out) the ServerPort component: otherwise, as we have just seen, it would override the port that you pass from the command line.
+{% highlight bash %}
 ./gradlew bootRun --args="--server.port=8885"
 {% endhighlight %}
 <div class="lesson-nav">
