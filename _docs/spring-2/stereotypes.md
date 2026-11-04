@@ -2,8 +2,8 @@
 title: 1. Beans and Stereotypes
 category: 04. Java Spring (Part II)
 order: 1
-exclude: true
-excluded_in_search: true
+exclude: false
+excluded_in_search: false
 ---
 <h2>Contents</h2>
 * toc
@@ -12,9 +12,10 @@ excluded_in_search: true
 A Spring Bean is simply a Java object that is instantiated, configured, and managed by the Spring IoC container. Beans are fundamental in Spring, as they represent the core building blocks of an application, containing the logic, state, and interactions necessary to perform business functions.
 A bean can be defined in multiple ways, including:
 
-1. Annotated with @Component or its specializations (@Controller, @Service, @Repository) (more details in a moment).
-2. Declared in XML configuration:
-For example, you have a simple Java class:
+1. Annotated with `@Component` or its specializations (`@Controller`, `@Service`, `@Repository`) (more details in a moment).
+2. Declared in an XML configuration file.
+
+Let's see an example of the second way. Suppose you have a simple Java class:
 {% highlight java %}
 package com.example.springbeans;
 
@@ -38,16 +39,16 @@ public class HelloWorldBean {
     }
 }
 {% endhighlight %}
-You can use it as a Spring bean by using an XML configuration file (stored in the resources folder):
+You can use it as a Spring bean by declaring it in an XML configuration file, `src/main/resources/applicationContext.xml`:
 {% highlight xml %}
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- Bean definition for UserService -->
-    <bean id="userService" class="com.example.springbeans.HelloWorldBean">
-        <!-- Setting the property 'serviceName' -->
+    <!-- Bean definition for HelloWorldBean -->
+    <bean id="helloWorldBean" class="com.example.springbeans.HelloWorldBean">
+        <!-- Setting the property 'text' -->
         <property name="text" value="Hello World!"/>
     </bean>
 </beans>
@@ -81,7 +82,7 @@ This annotation is ideal for classes that don’t fall under specific roles.
 The **@Controller** annotation is a specialization of @Component used to mark a class as a Spring MVC controller. This annotation handles HTTP requests and maps them to methods that produce responses (such as HTML views or JSON/XML data).
 
 A controller in Spring typically processes user input, interacts with service components, and returns a view or data response.
-For example, one can use @RestController (subclass of @Controller) to expose an REST HTTP endpoint. 
+For example, one can use `@RestController` (a shortcut for `@Controller` plus `@ResponseBody`, meaning that the value returned by each method is sent directly as the body of the response) to expose a REST HTTP endpoint. 
 {% highlight java %}
 package com.example.springbeans;
 
@@ -97,22 +98,24 @@ public class ControllerExample {
     }
 }
 {% endhighlight %}
-In the snippet above, @RequestMapping is an annotation that maps web requests to specific handler classes and methods in Spring MVC. It allows you to specify the URL pattern, HTTP methods, request parameters, headers, and other conditions under which a method should be invoked. The default HTTP method is GET, but you can implements other HTTP methods by using the method parameter, for example:
+In the snippet above, `@RequestMapping` is an annotation that maps web requests to specific handler classes and methods in Spring MVC. It allows you to specify the URL pattern, HTTP methods, request parameters, headers, and other conditions under which a method should be invoked. If you don't specify any HTTP method, the mapping accepts **all** of them (GET, POST, DELETE, ...): our `index` method answers a DELETE request just like a GET one. To restrict it to a specific HTTP method, use the `method` parameter, for example:
 {% highlight java %}
 @RequestMapping(value = "/users", method = RequestMethod.POST)
 {% endhighlight %}
 To make code more readable and concise, Spring introduced more specialized annotations to handle specific HTTP methods:
-- @GetMapping: For HTTP GET requests.
-- @PostMapping: For HTTP POST requests.
-- @PutMapping: For HTTP PUT requests.
-- @DeleteMapping: For HTTP DELETE requests.
-- @PatchMapping: For HTTP PATCH requests.
-You don't need to specify the method in the annotation using these.
+- `@GetMapping`: For HTTP GET requests.
+- `@PostMapping`: For HTTP POST requests.
+- `@PutMapping`: For HTTP PUT requests.
+- `@DeleteMapping`: For HTTP DELETE requests.
+- `@PatchMapping`: For HTTP PATCH requests.
+
+You don't need to specify the method in the annotation using these. In practice, you will mostly use these annotations, as we did in the previous lesson with `@GetMapping`.
 
 ### @Service
 The @Service annotation is another specialization of @Component. It indicates that a class provides some business logic or service. This annotation is often used for the middle layer of an application, where you encapsulate the business rules or logic.
 
 It plays a key role in the Service Layer pattern, handling the logic behind user requests and coordinating various repository operations. In the next part of the lesson, we will see how to use it.
+
 ### @Repository
 The @Repository annotation is a specialization of @Component and is used to designate a class as a Data Access Object (DAO). This class interacts with the database, managing persistence operations like creating, reading, updating, and deleting records. In other words, a class annotated with @Repository encapsulates the logic needed to interact with the database or other data storage mechanisms.
 <div class="lesson-nav">
