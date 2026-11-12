@@ -2,8 +2,8 @@
 title: 2. HTTP REST
 category: 05. HTTP
 order: 2
-exclude: true
-excluded_in_search: true
+exclude: false
+excluded_in_search: false
 ---
 <h2>Contents</h2>
 * toc
@@ -11,12 +11,16 @@ excluded_in_search: true
 ## Introduction
 In the previous section, we learned what is HTTP and how it works by talking about HTTP methods and status codes. 
 Now, we want to introduce an architectural style that defines some constraints for how the architecture of a web system should work: the <a href="https://ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf">REST</a> (Representational state transfer) architecture.  
-Introduced in 2000 by Roy Fielding during his PhD, the focal point of REST is the definition of resources. Resources are any information that can be named (a document, an image, a collection of resources, an application's domain object). A resource has an identifier, that permits it to identify it. With a resource identifier, one can refer to the resource and perform some operations on it. It is easy to explain it by showing an example. 
+Introduced in 2000 by Roy Fielding during his PhD, the focal point of REST is the definition of resources. Resources are any information that can be named (a document, an image, a collection of resources, an application's domain object). Each resource has an identifier that uniquely identifies it. With a resource identifier, one can refer to the resource and perform some operations on it. It is easy to explain it by showing an example. 
 ## How to perform HTTP requests
-To test HTTP Calls, one can use <a href="https://curl.se/">cURL</a>, <a href="https://www.postman.com/">Postman</a>, or <a href="https://insomnia.rest/">Insomnia</a>. For simplicity, we use Insomnia.
+To test HTTP Calls, one can use <a target="_blank" rel="noopener noreferrer" href="https://curl.se/">cURL</a>, <a target="_blank" rel="noopener noreferrer" href="https://www.postman.com/">Postman</a>, or <a target="_blank" rel="noopener noreferrer" href="https://insomnia.rest/">Insomnia</a>. In the screenshots we use Insomnia (you don't need an account: you can use it locally, in the Scratch Pad), but every request can also be done with cURL from the terminal. For example:
+{% highlight bash %}
+curl -i https://api.github.com
+{% endhighlight %}
+The `-i` flag tells cURL to print also the response headers.
 ## Example of an HTTP REST API
-Let's see a real example of a REST API: <a href="https://docs.github.com/en/rest?apiVersion=2022-11-28">github</a> API. Please have a look at the <a href="https://docs.github.com/en/rest?apiVersion=2022-11-28">github</a>: documentation is important when you are dealing with software. For this case, we treat the GitHub API as a black box: we don't know how it works internally, how to access resources, or how to authenticate ourselves. These pieces of information, for good software, must be present clearly in the documentation. GitHub developers are good developers, and they have written all the necessary information.  
-In this <a href="https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28"> there is written that the API is accessed from <a href="https://api.github.com">https://api.github.com</a>. So let's try to write a simple HTTP GET request to this URL to see what happens:
+Let's see a real example of a REST API: the <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/rest">GitHub</a> API. Please have a look at its documentation: documentation is important when you are dealing with software. For this case, we treat the GitHub API as a black box: we don't know how it works internally, how to access resources, or how to authenticate ourselves. These pieces of information, for good software, must be present clearly in the documentation. GitHub developers are good developers, and they have written all the necessary information.  
+In the <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api">getting started</a> page, it is written that the API is accessed from <a href="https://api.github.com">https://api.github.com</a>. So let's try to write a simple HTTP GET request to this URL to see what happens:
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_1.png)
 {% highlight json %}
 {
@@ -57,18 +61,18 @@ In this <a href="https://docs.github.com/en/rest/overview/resources-in-the-rest-
 {% endhighlight %}
 Our request returns a 200 (OK) status code, and we have a JSON body plus some headers.
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_2.png)
-As we can notice, the response consists of a set of URLs. These URLs are pointers to resources. Since we are curious, let's see what happens if we try to access the first resource (that is, using the intuitions, the resource that models our GitHub profile).  
+As we can notice, the response consists of a set of URLs. These URLs are pointers to resources. Since we are curious, let's see what happens if we try to access the first resource (that is, intuitively, the resource that models our GitHub profile).  
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_3.png)
-Oh, something is not working! We get an error 401 (Unauthorized). However, the call returns a body with some information about the error. To have a good API, the server should provide some useful information about the problem to help the client understand what happens and to direct him on how to behave.  401 means that we are not authorized. The documentation says that we can use a Bearer Access Token to have a grant. We can create one here: <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a> (select repo, user, project scope: scope defines what you can do and what not with this token).  
+Oh, something is not working! We get an error 401 (Unauthorized). However, the call returns a body with some information about the error. To have a good API, the server should provide some useful information about the problem to help the client understand what happens and to direct them on how to behave.  401 means that we are not authenticated: the server does not know who we are. The documentation says that we can use a Bearer Access Token to have a grant. We can create one here: <a target="_blank" rel="noopener noreferrer" href="https://github.com/settings/tokens">https://github.com/settings/tokens</a>. In the screenshots, we create a *classic* token, selecting the repo, user, and project scopes (scopes define what you can and cannot do with this token). GitHub now also offers *fine-grained* tokens, which are recommended because they can be restricted to specific repositories and permissions: if you use one, give it access to your repositories with read and write permissions on Issues. Treat a token like a password: never commit it or share it.  
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_4.png)
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_5.png)
 Now copy the Token, and paste it into a Header (Authorization: Bearer XXXXXXXXXXXX):
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_6.png)
-After doing this, click send: now we have the grant to access the resource. The call responds 200 (OK) with the resource in the Body. Note that the response differs (every one of them has a different access token that identifies different GitHub accounts).   
+After doing this, click send: now we have the grant to access the resource. The call responds 200 (OK) with the resource in the Body.   
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_7.png)
 How to see all the repositories of a user?
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_8.png)
-The Call goes in 200 (OK), but our response is an empty array: this means that this account does not have any repositories. Let's try to create a repository from the GitHub website to see what changes.
+The call returns 200 (OK), but our response is an empty array: this means that this account does not have any repositories. Let's try to create a repository from the GitHub website to see what changes.
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_9.png)
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_10.png)
 {% highlight json %}
@@ -182,15 +186,22 @@ The Call goes in 200 (OK), but our response is an empty array: this means that t
     }
 ]
 {% endhighlight %}
-The returned JSON now contains our repository: look at the entry. You have a field "owner", that says who is the owner of the repository, with URLs that identify resources, and some information: for example, we can know that this repository is private, and we have URLs that permit access to underlying resources such as merge requests, commits, etc.  
-Let's try to create an issue from the API. <a href="https://docs.github.com/en/rest/issues/issues#create-an-issue">Here</a>, we have all the necessary information about how to build a request to do this. We know that we need to perform a POST a body to **/repos/{owner}/{repo}/issues** where *owner* is the id of the owner of the repository and *repo* is the name of the repo (this is like to say: from user 'owner', get the repository named 'repo', and POST a new issue). Let's create a minimal body with only the required fields (change owner and repo with your data):
+The returned JSON now contains our repository: look at the entry. You have a field "owner", that says who is the owner of the repository, with URLs that identify resources, and some information: for example, we can know that this repository is private, and we have URLs that permit access to underlying resources such as pull requests, commits, etc.  
+Let's try to create an issue from the API. <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/rest/issues/issues#create-an-issue">Here</a>, we have all the necessary information about how to build a request to do this. We need to perform a POST with a JSON body to **/repos/{owner}/{repo}/issues**, where *owner* is the username of the owner of the repository and *repo* is the name of the repo (this is like saying: from user 'owner', get the repository named 'repo', and POST a new issue). Note that *owner* and *repo* are **path parameters**: they are part of the URL, not of the body. The only required field of the body is the title:
 {% highlight json %}
 {
-    "owner": "gzanatestgithub",
-    "repo": "test-repo",
     "title": "[BUG] Buffer overflow"
 }
 {% endhighlight %}
+So, in our case (change owner and repo with your data), we POST this body to **https://api.github.com/repos/gzanatestgithub/test-repo/issues**, with the same Authorization header as before. With cURL:
+{% highlight bash %}
+curl -i -X POST \
+  -H "Authorization: Bearer XXXXXXXXXXXX" \
+  -H "Accept: application/vnd.github+json" \
+  -d '{"title": "[BUG] Buffer overflow"}' \
+  https://api.github.com/repos/gzanatestgithub/test-repo/issues
+{% endhighlight %}
+In the screenshot below, the body also contains the owner and repo fields: they are not needed (GitHub ignores them), since this information is already in the URL.
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_11.png)
 Status 201 (Created) means that our POST request was successful. We can see the created issue from GitHub:
 ![HTTP rest]({{ site.baseurl }}/images/http_rest_12.png)
@@ -220,13 +231,15 @@ result = server.add(2, 3)
 print(result)
 {% endhighlight %}
 Without going into too much detail, the client will call the add function on the server (like it is a "local" function) and print the result (the sum operation is executed on the server). 
-RPC and REST could seem very similar (for example, considering GitHub, one could use an API library <a href="https://github.com/PyGithub/PyGithub">this</a> that hides the REST architecture), but the main difference is that RPC exposes functions, while REST exposes resources and a way to manipulate them. RPC is used when you want to execute something on a server, and REST is typically used to perform CRUD (Create, Retrieve, Update, Delete) operations on remote data.
+RPC and REST could seem very similar (for example, considering GitHub, one could use an API library like <a target="_blank" rel="noopener noreferrer" href="https://github.com/PyGithub/PyGithub">this</a> that hides the REST architecture), but the main difference is that RPC exposes functions, while REST exposes resources and a way to manipulate them. RPC is used when you want to execute something on a server, and REST is typically used to perform CRUD (Create, Read, Update, Delete) operations on remote data.
 ## Exercises
 1. Try a PATCH operation on your previously created issue, for example adding a description (body field) or editing the title. Try also to add a comment to the issue. Now, remove the comment.
 1. Write a script with your preferred language that, taking in input the owner and the name of a public repository, downloads the .zip of the latest tag.
-<div>
-Previous: <a href="{{ site.baseurl }}/http/introduction">HTTP - Introduction</a> 
-</div>
-<div>
-Next: <a href="{{ site.baseurl }}/http/spring-rest">HTTP - Spring REST</a>  
+<div class="lesson-nav">
+    <div>
+    Previous: <a href="{{ site.baseurl }}/http/introduction">HTTP - Introduction</a>
+    </div>
+    <div>
+    Next: <a href="{{ site.baseurl }}/http/spring-rest">HTTP - Spring REST</a>
+    </div>
 </div>
