@@ -2,8 +2,8 @@
 title: 1. Introduction
 category: 06. Camel
 order: 1
-exclude: true
-excluded_in_search: true
+exclude: false
+excluded_in_search: false
 ---
 ![Camel logo]({{ site.baseurl }}/images/camel_logo.png)
 <h2>Contents</h2>
@@ -11,40 +11,41 @@ excluded_in_search: true
 {:toc}
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/9JZQ1dp1cZ4?si=_ZDKpYcp9RUx8mr8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ## Introduction
-Complex applications rarely live in isolation. Consider for example an e-commerce system. The front-end needs to interface with a back-end, and this one must be connected to a database (that stores for example the catalogs and the users), an OMS (Order Management System) for processing customer orders, a CRM (Customer Relationship Management) and a marketing automation instance for sending transactional emails and manages promotions. Complex applications need to be integrated with other applications and integration could be challenging: we need to permit communication between distinct applications (perhaps written in different languages).  
-There are different ways to achieve this: we saw the REST architectural style, which if implemented well can potentially be used to exchange information between systems (one system POST or EDIT something on another one), and we talked about databases (that can be shared among applications). Another way to integrate two systems is by using File Transfer: some applications of the overall system can produce files (stored for example in an FTP server) while others can consume and vice versa. Another approach is to use Message-Passing, a concept that we will deepen in a moment.  
+Complex applications rarely live in isolation. Consider for example an e-commerce system. The front-end needs to interface with a back-end, and this one must be connected to a database (that stores for example the catalogs and the users), an OMS (Order Management System) for processing customer orders, a CRM (Customer Relationship Management) and a marketing automation instance for sending transactional emails and managing promotions. Complex applications need to be integrated with other applications and integration could be challenging: we need to permit communication between distinct applications (perhaps written in different languages).  
+There are different ways to achieve this: we saw the REST architectural style, which if implemented well can potentially be used to exchange information between systems (one system can POST or PATCH something on another one), and we talked about databases (that can be shared among applications). Another way to integrate two systems is by using File Transfer: some applications of the overall system can produce files (stored for example in an FTP server) while others can consume and vice versa. Another approach is to use Message-Passing, a concept that we will deepen in a moment.  
 Managing integrations can be very hard and Camel could help us.
 
 ## What is Camel
-<a target="_blank" rel="noopener noreferrer" href="https://github.com/apache/camel/">Apache Camel</a> is a Open Source Integration Framework that permits to quickly integrate various systems by consuming or producing data. It provides a simple API that abstracts away all the internal details like, for example, the transport style or the communication. 
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/apache/camel/">Apache Camel</a> is an Open Source Integration Framework that permits to quickly integrate various systems by consuming or producing data. It provides a simple API that abstracts away all the internal details like, for example, the transport style or the communication. 
 ### Camel common use cases
 Camel can be used to perform some operations, such as (but not limited to):
-- File integration: it can be used to monitor file changes, processing, and move files to other locations.
+- File integration: it can be used to monitor file changes, process files, and move them to other locations.
 - Messaging: it can be used to connect different systems asynchronously by exchanging messages.
 - Data Transformation: it can be used to convert data to different formats, for example from XML to JSON or CSV.
 ### Messages
 Integrating systems needs some sort of communication between them. In Camel, communication is provided by exchanging messages. A message flows in one direction from a sender to a receiver.  
 Messages have a body (payload), headers, and optional attachments. A message has a unique ID of type String.
-- **Headers and Attachments**: headers are name-value pairs. Names are unique strings while value can be any Java Object. Headers are stored as a Map within the message. Optional attachments can be present, and they are typically used for web service and email components.
+- **Headers and Attachments**: headers are name-value pairs. Names are unique strings while value can be any Java Object. Headers are stored as a Map within the message. Optional attachments can also be added (through the `camel-attachments` module): they are typically used for web service and email components.
 - **Body**: the body is a Java Object. If the sender and receiver use different body formats, Camel can provide mechanisms to transform data into an acceptable format. In many cases, this transformation is done automatically.
-The most important feature of Camel is the routing engine, which permits to moving of messages from one system to another.
+The most important feature of Camel is the routing engine, which permits moving messages from one system to another.
 ### Routes
 A route is a chain of processors. Routes permit to decouple clients from servers and producers to consumers. A route for example can decide dynamically what server a client will invoke, using some rules or message filtering and also add extra processing to messages. Routes are defined using Camel's DSL.
 Routes can be thought of as a graph that has processors as nodes and some lines that connect different processors (different nodes). Lines connect the output of one processor to the input of another one.
-Camel provides some features, such as a domain-specific language on top of regular programming languages (such as Java). In addition, you can also specify Camel semantics in XML.
+Camel provides some features, such as a domain-specific language on top of regular programming languages (such as Java). In addition, you can also specify routes in XML or YAML.
 ## Getting Started
-Let's create a new Java Project, and add Camel dependency.
+Let's create a new Java Project (with Gradle, as we did in the Gradle lesson), and add the Camel dependencies: `camel-core` contains the Camel engine and the most common components, while `camel-main` contains the `Main` class that we use to run Camel as a standalone application.
 {% highlight kotlin %}
-implementation("org.apache.camel:camel-core:3.18.1")
+dependencies {
+    implementation("org.apache.camel:camel-core:4.23.0")
+    implementation("org.apache.camel:camel-main:4.23.0")
+}
 {% endhighlight %}
 Then, create this CamelMain file:
 {% highlight java %}
 package org.example;
 
 import org.apache.camel.builder.RouteBuilder;
-
 import org.apache.camel.main.Main;
-
 
 public class CamelMain {
     public static void main(String[] args) throws Exception {
@@ -64,11 +65,17 @@ public class CamelMain {
 {% endhighlight %}
 This is an example of an endless Camel application. Let's analyze what it is written by looking at the RouteBuilder.
 ### The Route Builder
-The RouteBuilder class is a base Camel class that is derived to create routing rules using the DSL. Here, we are extending the RouteBuilder class to create a custom Rule. Camel routes are defined in the configure method, where we use Camel DSL: from defines the starting point of our route, i.e., the point from which messages are taken. The parameter passed to the "from" function is a String that defines the URI endpoint of the route. Camel provides a huge set of <a target="_blank" rel="noopener noreferrer" href="https://camel.apache.org/manual/component.html">Components</a>, each of one used to connect a wide range of technologies. For our example, we are using the <a target="_blank" rel="noopener noreferrer" href="https://camel.apache.org/components/4.0.x/file-component.html">File</a> component, which provides access to file systems and allows the processing of files. Each endpoint has a URI with the format ***"component:context-path?query"***. In our case, file://input?delete=true means that we are using the file component and that we are looking for files in /input directory. The query delete=true tells Camel to remove the file after the processing (all the available query parameters for a component are well documented in the official documentation).  
+The RouteBuilder class is a base Camel class that is derived to create routing rules using the DSL. Here, we are extending the RouteBuilder class to create a custom Rule. Camel routes are defined in the configure method, where we use Camel DSL: from defines the starting point of our route, i.e., the point from which messages are taken. The parameter passed to the "from" function is a String that defines the URI endpoint of the route. Camel provides a huge set of <a target="_blank" rel="noopener noreferrer" href="https://camel.apache.org/manual/component.html">Components</a>, each one used to connect a wide range of technologies. For our example, we are using the <a target="_blank" rel="noopener noreferrer" href="https://camel.apache.org/components/next/file-component.html">File</a> component, which provides access to file systems and allows the processing of files. Each endpoint has a URI with the format ***"component:context-path?query"***. In our case, file://input?delete=true means that we are using the file component and that we are looking for files in the input directory (relative to the folder from which we run the application, i.e., the project folder). The query delete=true tells Camel to remove the file after the processing (all the available query parameters for a component are well documented in the official documentation).  
 Then, we have a process method. A processor defines custom business logic that must be done for the message: in our example, we just print out the file name (obtained from the header of the message).
 At the end, we have a to, which is the last endpoint in which messages flow.  
-Our example simply moves all the files of the /input directory into the /output dir, logging the name.  
-If you look at the static main method, probably you will notice something strange: we create a main Camel object passing our class as a costructor parameter, and then we call the run method. We did this because a Camel pipeline works in a separate thread. Using the Camel Main permits to keep running the pipeline. Now launch the application, and try to create some files in the /input folder. You should see that the file moves to the /output folder.
-<div>
-Next: <a href="{{ site.baseurl }}/camel/example">Camel - Example</a> 
+Our example simply moves all the files of the input directory into the output directory, logging their names.  
+If you look at the static main method, probably you will notice something strange: we create a main Camel object passing our class as a constructor parameter (Camel looks for the RouteBuilder classes inside it, and in its package), and then we call the run method. We did this because Camel consumes messages in separate threads: without Main, our main method would end immediately, and the application with it. Camel Main starts Camel and keeps the application running until we stop it. Now launch the application (`./gradlew run`, after setting `mainClass.set("org.example.CamelMain")` in the `application` block of build.gradle.kts), and try to create some files in the input folder (Camel creates it, if it does not exist). You should see that the files move to the output folder:
+{% highlight bash %}
+File name: a.txt
+File name: b.txt
+{% endhighlight %}
+<div class="lesson-nav">
+    <div>
+    Next: <a href="{{ site.baseurl }}/camel/example">Camel - Example</a>
+    </div>
 </div>
